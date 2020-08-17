@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendas</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="p-5 text-light d-flex justify-content-between" style="background-color: #E7879A;">
+        <h1><a href="/" style="text-decoration: none; color: white;">22 Store</a></h1>
+    </header>
+
+    <% for(let i=0; i < objetos.length; i++){ %>
+    <div class="card mb-5">
+        <div class="d-flex justify-content-between card-header p-3">
+            <h2 class=""><%= objetos[i].name %></h2>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Custo: <%= objetos[i].cost%></li>
+            <li class="list-group-item">Valor da venda: <%= objetos[i].price%></li>
+            <li class="list-group-item">Lucro da venda: <%= objetos[i].price - objetos[i].cost%></li>
+        </ul>
+    </div>
+    <%}%>
+</body>
+</html>

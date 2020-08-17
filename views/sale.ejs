@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Venda</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="p-5 text-light d-flex justify-content-between" style="background-color: #E7879A;">
+        <h1><a href="/" style="text-decoration: none; color: white;">22 Store</a></h1>
+    </header>
+
+    <main class="w-75 m-auto">
+        <form id="sellForm" action="">
+            <div class="mt-5">
+                <div class="card">
+                    <div class="d-flex justify-content-between card-header p-3">
+                        <h2 class=""><%=clothes.name%></h2>
+                    </div>
+                    <input type="hidden" value="<%= clothes.id %>" name="clotheId">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Descrição: <%= clothes.description%></li>
+                        <li class="list-group-item">Custo: <%= clothes.cost%></li>
+                        <li class="list-group-item">Venda: <input name="price" type="number" value="<%= clothes.price%>">
+                        </li>
+                        <li class="list-group-item">
+                            <label for="clientes">Cliente:</label>
+                            <select class="form-control" id="clientes" name="clients">
+                                <% for(let i=0; i < clients.length; i++){ %>
+                                <option value="<%= clients[i].id %>"><%= clients[i].name %></option>
+                                <%}%>
+                              </select>
+                        </li>
+                        <li class="list-group-item">
+                            <label for="payment">Forma de pagamento:</label>
+                            <select name="payment" id="payment">
+                                <% for(let i=0; i < payments.length; i++){ %>
+                                <option value="<%= payments[i].id %>"><%= payments[i].name %></option>
+                                <%}%>
+                            </select>
+                        </li>
+                    </ul>
+                    <button type="submit" class="btn btn-success w-100 mt-3" onclick="sell(event)">Vender</button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+
+    <script>
+        function sell(event) {
+            event.preventDefault();
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+            var urlencoded = new URLSearchParams();
+            for (let inputField of sellForm) {
+                urlencoded.append(inputField.name, inputField.value);
+
+            }
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: urlencoded,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/vendas/vender", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+        }
+    </script>
+</body>
+
+</html>

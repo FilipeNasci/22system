@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>22 Store</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="p-5 text-light d-flex justify-content-between" style="background-color: #E7879A;">
+        <h1>22 Store</h1>
+        <div>
+            <button type="button" class="btn btn-danger"><a href="/admin" style="text-decoration: none; color: white;">Adm</a></button>
+            <button class="btn btn-primary"><a href="/cliente/cadastrarCliente" style="text-decoration: none; color: white;">Cadastrar cliente</a></button>
+            <button type="button" class="btn btn-success"><a href="/vendas/listar">Venda$</a></button>
+            <button class="btn btn-primary" onclick="changeDisplay()">Cadastrar nova peça</button>
+        </div>
+    </header>
+    <main class="w-75 m-auto">
+        <form id="addForm" action="/" style="display: none;">
+            <div class="form-group">
+                <label for="name">Nome da peça: </label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+            <div class="from-group">
+                <label for="description">Descrição da peça:</label>
+                <input type="text" id="description" name="description" class="form-control" required>
+            </div>
+            <div class="from-group">
+                <label for="cost">Custo da peça:</label>
+                <input type="number" id="cost" name="cost" class="form-control" required>
+            </div>
+            <div class="from-group">
+                <label for="price">Preço sugerido para venda:</label>
+                <input type="number" id="price" name="price" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mt-3" onclick="addClothe(event)">Cadastrar</button>
+        </form>
+
+
+        <% for(let i=0; i < clothes.length; i++){ %>
+        <div id="<%= clothes[i]._id %>" class="mt-5">
+            <div class="card">
+                <div class="d-flex justify-content-between card-header p-3">
+                    <h2 class=""><%= clothes[i].name %></h2>
+                    <button type="button" class="btn btn-success" ><a href="/vendas/<%= clothes[i].id %>">Vender</a></button>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Descrição: <%= clothes[i].description%></li>
+                    <li class="list-group-item">Custo: <%= clothes[i].cost%></li>
+                    <li class="list-group-item">Preço sugerido de venda: <%= clothes[i].price%></li>
+                </ul>
+            </div>
+        </div>
+        <%}%>
+
+    </main>
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script>
+        function changeDisplay() {
+            let display = $('#addForm').is(':visible');
+
+            if (display) {
+                $('#addForm').css("display", "none");
+            } else {
+                $('#addForm').css("display", "block");
+            }
+        }
+
+        function addClothe(event) {
+            event.preventDefault();
+
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/x-www-form-urlencoded");
+
+            var urlencoded = new URLSearchParams();
+            for (let inputField of addForm) {
+                urlencoded.append(inputField.name, inputField.value);
+
+            }
+
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: urlencoded,
+                redirect: 'follow'
+            };
+
+            fetch("http://localhost:3000/add", requestOptions)
+                .then(response => response.text())
+                .then(result => console.log(result))
+                .catch(error => console.log('error', error));
+
+            changeDisplay();
+        }
+
+        function sell(id){
+            console.log(id);
+        }
+    </script>
+
+</body>
+
+</html>

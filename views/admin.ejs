@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+
+<body>
+    <header class="p-5 text-light d-flex justify-content-between" style="background-color: #E7879A;">
+        <h1><a href="/" style="text-decoration: none; color: white;">22 Store</a></h1>
+    </header>
+
+    <main class="w-75 m-auto">
+        <form action="">
+            <h1>Cadastro de forma de pagamento</h1>
+            <label for="name">Nome:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+            <label for="description">Descrição:</label>
+            <input type="text" class="form-control" id="description" name="description" required>
+            <button type="submit" class="btn btn-primary w-100 mt-3" onclick="registerPayment(event)">Cadastrar</button>
+        </form>
+    </main>
+
+
+
+
+    <script>
+        function clearForm() {
+        document.getElementById('name').value = "";
+        document.getElementById('description').value = "";
+    }
+    </script>
+</body>
+
+</html>
